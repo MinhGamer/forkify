@@ -4,7 +4,7 @@ const recipeContainer = document.querySelector('.recipe');
 
 class RecipeView {
   async _renderRecipe(recipe) {
-    this._renderSpinner(recipeContainer);
+    this._renderSpinner();
     if (!recipe) return;
 
     const recipeHTML = `
@@ -131,7 +131,7 @@ class RecipeView {
     );
   }
 
-  _renderSpinner(parentEle) {
+  _renderSpinner() {
     const spinnerHTML = `
         <div class="spinner">
             <svg>
@@ -139,8 +139,8 @@ class RecipeView {
             </svg>
         </div>
     `;
-    parentEle.innerHTML = spinnerHTML;
+    recipeContainer.innerHTML = spinnerHTML;
   }
 }
 
-export default RecipeView;
+export default new RecipeView();
