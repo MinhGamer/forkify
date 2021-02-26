@@ -43,7 +43,7 @@ export const loadRecipe = async recipeId => {
       ingredients: ingredients,
     };
 
-    if (!res.ok) throw new Error(`$${data.message} (${res.status})`);
+    if (!res.ok) throw new Error(`${data.message} (${res.status})`);
   } catch (err) {
     throw err;
   }

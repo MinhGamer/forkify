@@ -36,32 +36,29 @@ const controlSearchResults = async searchTerm => {
     //get recipe list
     model.state.search.results = await model.loadRecipeList(searchTerm);
 
-    //render 10 recipes in the view
-    // recipeListView._renderRecipeList(model.getSearchResultsPage(1));
-
+    //render recipes in the view
     recipeListView._renderRecipeList(model.getSearchResultsPage());
 
-    //render initial button
+    //render  button
     paginationView._render(model.state.search);
   } catch (err) {
     console.log(err);
   }
 };
 
-const controlPagination = page => {
-  // console.log('Pagination', page);
-  recipeListView._renderRecipeList(model.getSearchResultsPage(+page));
+const controlPagination = gotoPage => {
+  recipeListView._renderRecipeList(model.getSearchResultsPage(+gotoPage));
 
   paginationView._render(model.state.search);
 };
 
-const controlRecipeList = () => {};
+const controlServings = () => {};
 
 const init = () => {
   recipeView._addHandlerRender(controlRecipe);
+  recipeView._addHandlerServings(controlServings);
   searchView._addHandlerSearch(controlSearchResults);
   paginationView._addHandlerClick(controlPagination);
-  // recipeListView._addHandlerRender(controlRecipeList);
 };
 
 init();

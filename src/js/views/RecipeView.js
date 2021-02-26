@@ -141,6 +141,8 @@ class RecipeView {
     `;
     recipeContainer.innerHTML = spinnerHTML;
   }
+
+  _addHandlerServings() {}
 }
 
 export default new RecipeView();

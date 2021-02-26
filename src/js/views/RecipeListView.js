@@ -8,8 +8,8 @@ class RecipeListView {
     let recipeListHTML = '';
     recipeList.forEach(recipe => {
       recipeListHTML += `
-        <li id="${recipe.id}" class="preview">
-            <a class="preview__link preview__link" href="#23456">
+        <li class="preview">
+            <a class="preview__link preview__link" href="#${recipe.id}">
               <figure class="preview__fig">
                 <img src="${recipe.image_url}" alt="Test" />
               </figure>
@@ -29,12 +29,6 @@ class RecipeListView {
     });
 
     resultsContainer.innerHTML = recipeListHTML;
-
-    recipeList.forEach(recipe => {
-      document
-        .getElementById(recipe.id)
-        .addEventListener('click', () => this._getRecipe(recipe.id));
-    });
   }
 
   _getRecipe(id) {
