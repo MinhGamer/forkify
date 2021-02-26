@@ -1,10 +1,16 @@
 import 'regenerator-runtime/runtime';
 
-import { API_URL, KEY } from './config.js';
+import { API_URL, KEY, RESULTS_PER_PAGE } from './config.js';
 
 export const state = {
   recipe: {},
-  recipeList: [],
+  // recipeList: [],
+  search: {
+    query: '',
+    results: [],
+    resultsPerPage: RESULTS_PER_PAGE,
+    page: 1,
+  },
 };
 
 export const loadRecipe = async recipeId => {
@@ -48,9 +54,18 @@ export const loadRecipeList = async searchTerm => {
     const res = await fetch(`${API_URL}/?search=${searchTerm}&key=${KEY}`);
 
     const data = await res.json();
-    // console.log(data.data.recipes);
+
     return data.data.recipes;
   } catch (err) {
     console.log(err);
   }
+};
+
+export const getSearchResultsPage = (page = state.search.page) => {
+  state.search.page = page;
+
+  const start = (page - 1) * state.search.resultsPerPage;
+  const end = page * state.search.resultsPerPage;
+
+  return state.search.results.slice(start, end);
 };

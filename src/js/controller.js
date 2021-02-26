@@ -3,8 +3,8 @@ import 'regenerator-runtime/runtime';
 import * as model from './model.js';
 import recipeView from './views/RecipeView.js';
 import recipeListView from './views/RecipeListView.js';
-
 import searchView from './views/SearchView.js';
+import paginationView from './views/PaginationView.js';
 
 // const timeout = function (s) {
 //   return new Promise(function (_, reject) {
@@ -33,11 +33,14 @@ const controlRecipe = async () => {
 
 const controlSearchResults = async searchTerm => {
   try {
-    model.state.recipeList = await model.loadRecipeList(searchTerm);
+    //get recipe list
+    model.state.search.results = await model.loadRecipeList(searchTerm);
 
-    console.log(model.state.recipeList);
+    //render 10 recipes in the view
+    recipeListView._renderRecipeList(model.getSearchResultsPage(6));
 
-    recipeListView._renderRecipeList(model.state.recipeList);
+    //render initial button
+    paginationView._render(model.state.search);
   } catch (err) {
     console.log(err);
   }
