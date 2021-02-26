@@ -6,6 +6,7 @@ class RecipeView {
   async _renderRecipe(recipe) {
     this._renderSpinner(recipeContainer);
     if (!recipe) return;
+
     const recipeHTML = `
           <figure class="recipe__fig">
             <img src="${recipe.imageURL}" alt="" class="recipe__img" />
@@ -105,6 +106,23 @@ class RecipeView {
     `;
 
     recipeContainer.innerHTML = recipeHTML;
+  }
+
+  _renderError() {
+    const message = 'No recipes found for your query. Please try again!';
+
+    const errMessageHTML = `
+      <div class="error">
+        <div>
+          <svg>
+            <use href="${icons}#icon-alert-triangle"></use>
+          </svg>
+        </div>
+        <p>${message}</p>
+      </div>
+    `;
+
+    recipeContainer.innerHTML = errMessageHTML;
   }
 
   _addHandlerRender(handler) {

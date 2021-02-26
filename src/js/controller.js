@@ -22,9 +22,12 @@ const controlRecipes = async () => {
 
   if (!recipeId) return;
 
-  await model.loadRecipe(recipeId);
-
-  recipeView._renderRecipe(model.state.recipe);
+  try {
+    await model.loadRecipe(recipeId);
+    recipeView._renderRecipe(model.state.recipe);
+  } catch (err) {
+    recipeView._renderError();
+  }
 };
 
 const init = () => {

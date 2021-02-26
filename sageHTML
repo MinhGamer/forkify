@@ -1,0 +1,29 @@
+[33mcommit 7db7548060c262970326a87ce2f62c109046804a[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: MinhNguyenQuy <minhnguyenuehk38@gmail.com>
+Date:   Fri Feb 26 13:32:43 2021 +0700
+
+    handle fetching data error
+
+[33mcommit ad9d6375778664c1a15150c95f89b0e20432a92a[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: MinhNguyenQuy <minhnguyenuehk38@gmail.com>
+Date:   Fri Feb 26 13:13:50 2021 +0700
+
+    implement publisher-subscriber pattern
+
+[33mcommit 489a35d64745445261c88ebddb71e5b3b74af0d7[m
+Author: MinhNguyenQuy <minhnguyenuehk38@gmail.com>
+Date:   Fri Feb 26 10:54:19 2021 +0700
+
+    implement MVC architecture
+
+[33mcommit b824e0f66d7397745a9861ada1b532f44289bb30[m
+Author: MinhNguyenQuy <minhnguyenuehk38@gmail.com>
+Date:   Fri Feb 26 09:08:02 2021 +0700
+
+    add render recipe
+
+[33mcommit bdd93dcaaf15cc3e29c36901835b5e4eba1a6da1[m
+Author: MinhNguyenQuy <minhnguyenuehk38@gmail.com>
+Date:   Fri Feb 26 08:05:54 2021 +0700
+
+    first init
