@@ -13,7 +13,9 @@ class PaginationView {
     //Page 1 and others page
     if (currentPage === 1 && numPages > 1) {
       pageNumerHTML = `
-          <button class="btn--inline pagination__btn--next">
+          <button data-goto="${
+            currentPage + 1
+          }" class="btn--inline pagination__btn--next">
             <span>Page ${currentPage + 1}</span>
             <svg class="search__icon">
               <use href="${icons}#icon-arrow-right"></use>
@@ -23,7 +25,9 @@ class PaginationView {
     } else if (currentPage === numPages && numPages > 1) {
       //Last Page
       pageNumerHTML = `
-      <button class="btn--inline pagination__btn--prev">
+      <button data-goto="${
+        currentPage - 1
+      }" class="btn--inline pagination__btn--prev">
           <svg class="search__icon">
           <use href="${icons}#icon-arrow-left"></use>
           </svg>
@@ -33,13 +37,17 @@ class PaginationView {
     } else if (currentPage < numPages) {
       //Other Page
       pageNumerHTML = `
-          <button class="btn--inline pagination__btn--next">
+          <button data-goto="${
+            currentPage + 1
+          }" class="btn--inline pagination__btn--next">
               <span>Page ${currentPage + 1}</span>
               <svg class="search__icon">
                 <use href="${icons}#icon-arrow-right"></use>
               </svg>
             </button> 
-          <button class="btn--inline pagination__btn--prev">
+          <button data-goto="${
+            currentPage - 1
+          }"  class="btn--inline pagination__btn--prev">
               <svg class="search__icon">
               <use href="${icons}#icon-arrow-left"></use>
                   </svg>
@@ -50,6 +58,14 @@ class PaginationView {
 
     //Page 1 and NO others page
     paginationContainer.innerHTML = pageNumerHTML;
+  }
+
+  _addHandlerClick(handler) {
+    paginationContainer.addEventListener('click', e => {
+      const btn = e.target.closest('.btn--inline');
+      //   console.log(btn.dataset.goto);
+      handler(btn.dataset.goto);
+    });
   }
 }
 

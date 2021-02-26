@@ -37,7 +37,9 @@ const controlSearchResults = async searchTerm => {
     model.state.search.results = await model.loadRecipeList(searchTerm);
 
     //render 10 recipes in the view
-    recipeListView._renderRecipeList(model.getSearchResultsPage(6));
+    // recipeListView._renderRecipeList(model.getSearchResultsPage(1));
+
+    recipeListView._renderRecipeList(model.getSearchResultsPage());
 
     //render initial button
     paginationView._render(model.state.search);
@@ -46,11 +48,19 @@ const controlSearchResults = async searchTerm => {
   }
 };
 
-const controlRecipeList = async () => {};
+const controlPagination = page => {
+  // console.log('Pagination', page);
+  recipeListView._renderRecipeList(model.getSearchResultsPage(+page));
+
+  paginationView._render(model.state.search);
+};
+
+const controlRecipeList = () => {};
 
 const init = () => {
   recipeView._addHandlerRender(controlRecipe);
   searchView._addHandlerSearch(controlSearchResults);
+  paginationView._addHandlerClick(controlPagination);
   // recipeListView._addHandlerRender(controlRecipeList);
 };
 
