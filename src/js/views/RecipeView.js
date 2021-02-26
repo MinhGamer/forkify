@@ -1,10 +1,10 @@
-import { Fractional } from 'fractional';
+import Fractional from 'fractional';
 import icons from '../../img/icons.svg';
 const recipeContainer = document.querySelector('.recipe');
 
-console.log(Fractional);
 class RecipeView {
-  async _render(recipe) {
+  async _renderRecipe(recipe) {
+    this._renderSpinner(recipeContainer);
     if (!recipe) return;
     const recipeHTML = `
           <figure class="recipe__fig">
@@ -20,7 +20,7 @@ class RecipeView {
                 <use href="${icons}#icon-clock"></use>
               </svg>
               <span class="recipe__info-data recipe__info-data--minutes">${
-                recipe.cookingTimes
+                recipe.cookingTime
               }</span>
               <span class="recipe__info-text">minutes</span>
             </div>
@@ -69,7 +69,9 @@ class RecipeView {
               <svg class="recipe__icon">
               <use href="${icons}#icon-check"use>
                </svg>
-              <div class="recipe__quantity">${ingredient.quantity}</div>
+              <div class="recipe__quantity">${new Fractional.Fraction(
+                ingredient.quantity
+              ).toString()}</div>
                <div class="recipe__description">
               <span class="recipe__unit">${ingredient.unit}</span>
                 ${ingredient.description}
@@ -103,6 +105,23 @@ class RecipeView {
     `;
 
     recipeContainer.innerHTML = recipeHTML;
+  }
+
+  _addHandlerRender(handler) {
+    ['hashchange', 'load'].forEach(event =>
+      window.addEventListener(event, handler)
+    );
+  }
+
+  _renderSpinner(parentEle) {
+    const spinnerHTML = `
+        <div class="spinner">
+            <svg>
+              <use href="${icons}#icon-loader"></use>
+            </svg>
+        </div>
+    `;
+    parentEle.innerHTML = spinnerHTML;
   }
 }
 

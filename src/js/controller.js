@@ -1,12 +1,9 @@
 import 'regenerator-runtime/runtime';
-import icons from '../img/icons.svg';
 
 import * as model from './model.js';
 import RecipeView from './views/RecipeView.js';
 
 const recipeView = new RecipeView();
-const KEY = '187d40ad-f567-4e70-9112-76db87fefd15';
-const recipeContainer = document.querySelector('.recipe');
 
 // const timeout = function (s) {
 //   return new Promise(function (_, reject) {
@@ -20,30 +17,18 @@ const recipeContainer = document.querySelector('.recipe');
 
 ///////////////////////////////////////
 
-const fetchRecipe = async () => {
+const controlRecipes = async () => {
   const recipeId = window.location.hash.slice(1);
 
   if (!recipeId) return;
 
-  renderSpinner(recipeContainer);
-
   await model.loadRecipe(recipeId);
 
-  recipeView._render(model.state.recipe);
+  recipeView._renderRecipe(model.state.recipe);
 };
 
-const renderSpinner = parentEle => {
-  const spinnerHTML = `
-      <div class="spinner">
-          <svg>
-            <use href="${icons}#icon-loader"></use>
-          </svg>
-      </div>
-  `;
-  parentEle.innerHTML = spinnerHTML;
-  // parentEle.insertAdjacentHTML('beforeend', spinnerHTML);
+const init = () => {
+  recipeView._addHandlerRender(controlRecipes);
 };
 
-window.addEventListener('hashchange', fetchRecipe);
-
-window.addEventListener('load', fetchRecipe);
+init();
