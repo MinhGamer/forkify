@@ -35,12 +35,16 @@ class RecipeView {
               <span class="recipe__info-text">servings</span>
   
               <div class="recipe__info-buttons">
-                <button class="btn--tiny btn--increase-servings">
+                <button data-update-servings-to="${
+                  +recipe.servings - 1
+                }" data-servings="decrease" class="btn--tiny btn--increase-servings">
                   <svg>
                     <use href="${icons}#icon-minus-circle"></use>
                   </svg>
                 </button>
-                <button class="btn--tiny btn--increase-servings">
+                <button data-update-servings-to="${
+                  +recipe.servings + 1
+                }"  class="btn--tiny btn--increase-servings">
                   <svg>
                     <use href="${icons}#icon-plus-circle"></use>
                   </svg>
@@ -142,7 +146,13 @@ class RecipeView {
     recipeContainer.innerHTML = spinnerHTML;
   }
 
-  _addHandlerServings() {}
+  _addHandlerServings(handler) {
+    recipeContainer.addEventListener('click', e => {
+      const btn = e.target.closest('.btn--increase-servings');
+
+      handler(+btn.dataset.updateServingsTo);
+    });
+  }
 }
 
 export default new RecipeView();

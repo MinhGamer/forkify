@@ -4,7 +4,6 @@ import { API_URL, KEY, RESULTS_PER_PAGE } from './config.js';
 
 export const state = {
   recipe: {},
-  // recipeList: [],
   search: {
     query: '',
     results: [],
@@ -68,4 +67,19 @@ export const getSearchResultsPage = (page = state.search.page) => {
   const end = page * state.search.resultsPerPage;
 
   return state.search.results.slice(start, end);
+};
+
+export const updateServings = newServings => {
+  //1) update servings
+  console.log(newServings);
+  state.recipe.servings = newServings;
+
+  state.recipe.ingredients.forEach(ing => {
+    //2) update quantity
+    //newQt = oldQt / oldServings * newServings
+    ing.quantity = (
+      (ing.quantity / state.recipe.servings) *
+      newServings
+    ).toFixed(1);
+  });
 };

@@ -31,10 +31,6 @@ class RecipeListView {
     resultsContainer.innerHTML = recipeListHTML;
   }
 
-  _getRecipe(id) {
-    console.log(id);
-  }
-
   _renderSpinner() {
     const spinnerHTML = `
             <div class="spinner">
