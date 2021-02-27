@@ -4,7 +4,6 @@ class BookmarkView {
   }
 
   _renderBookmarks(bookmarks) {
-    console.log(bookmarks);
     let bookmarksEle = '';
     bookmarks.forEach(bookmark => {
       bookmarksEle += `

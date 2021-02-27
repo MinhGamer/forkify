@@ -7,24 +7,20 @@ import searchView from './views/SearchView.js';
 import paginationView from './views/PaginationView.js';
 import bookmarkView from './views/BookmarkView';
 
-// const timeout = function (s) {
-//   return new Promise(function (_, reject) {
-//     setTimeout(function () {
-//       reject(new Error(`Request took too long! Timeout after ${s} second`));
-//     }, s * 1000);
-//   });
-// };
-
 // https://forkify-api.herokuapp.com/v2
 
 ///////////////////////////////////////
 
+// run when page load
 const controlRecipe = async () => {
   const recipeId = window.location.hash.slice(1);
 
   if (!recipeId) return;
 
   try {
+    model.state.bookmarks = model.getBookmarksFromLocalStorage();
+    bookmarkView._renderBookmarks(model.state.bookmarks);
+
     //check to see if the recipe is in the bookmarks
     //and render bookmark
     const bookmarkIndex = model.state.bookmarks.findIndex(
@@ -81,6 +77,9 @@ const constrolBookmark = () => {
 
   //render bookmarks
   bookmarkView._renderBookmarks(model.state.bookmarks);
+
+  //save to local storage
+  model.saveBookmarksToLocalStorage(model.state.bookmarks);
 };
 
 const init = () => {

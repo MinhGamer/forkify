@@ -103,3 +103,11 @@ export const toggleBookmark = () => {
     state.bookmarks.push(state.recipe);
   }
 };
+
+export const saveBookmarksToLocalStorage = bookmarks => {
+  localStorage.setItem('recipeBookmarks', JSON.stringify(bookmarks));
+};
+
+export const getBookmarksFromLocalStorage = () => {
+  return JSON.parse(localStorage.getItem('recipeBookmarks'));
+};
