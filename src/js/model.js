@@ -10,6 +10,7 @@ export const state = {
     resultsPerPage: RESULTS_PER_PAGE,
     page: 1,
   },
+  bookmarks: [],
 };
 
 export const loadRecipe = async recipeId => {
@@ -51,8 +52,10 @@ export const loadRecipe = async recipeId => {
 export const loadRecipeList = async searchTerm => {
   try {
     const res = await fetch(`${API_URL}/?search=${searchTerm}&key=${KEY}`);
-
     const data = await res.json();
+
+    //set page pagination to page 1
+    state.search.page = 1;
 
     return data.data.recipes;
   } catch (err) {
@@ -70,16 +73,33 @@ export const getSearchResultsPage = (page = state.search.page) => {
 };
 
 export const updateServings = newServings => {
-  //1) update servings
-  console.log(newServings);
-  state.recipe.servings = newServings;
+  if (newServings === 0) return;
 
   state.recipe.ingredients.forEach(ing => {
-    //2) update quantity
+    //1) update quantity
     //newQt = oldQt / oldServings * newServings
-    ing.quantity = (
-      (ing.quantity / state.recipe.servings) *
-      newServings
-    ).toFixed(1);
+    ing.quantity = (+ing.quantity / +state.recipe.servings) * newServings;
   });
+
+  //2) update servings
+  state.recipe.servings = newServings;
+};
+
+export const toggleBookmark = () => {
+  //check if bookmark exist or not
+  const bookmarkIndex = state.bookmarks.findIndex(
+    bookmark => bookmark.id === state.recipe.id
+  );
+
+  //bookmark exist
+  //remove bookmark
+  if (bookmarkIndex !== -1) {
+    state.recipe.bookmarked = false;
+    state.bookmarks.splice(bookmarkIndex, 1);
+  } else {
+    //bookmark don't exist
+    //add bookmark
+    state.recipe.bookmarked = true;
+    state.bookmarks.push(state.recipe);
+  }
 };

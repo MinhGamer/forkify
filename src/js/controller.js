@@ -5,6 +5,7 @@ import recipeView from './views/RecipeView.js';
 import recipeListView from './views/RecipeListView.js';
 import searchView from './views/SearchView.js';
 import paginationView from './views/PaginationView.js';
+import bookmarkView from './views/BookmarkView';
 
 // const timeout = function (s) {
 //   return new Promise(function (_, reject) {
@@ -24,6 +25,17 @@ const controlRecipe = async () => {
   if (!recipeId) return;
 
   try {
+    //check to see if the recipe is in the bookmarks
+    //and render bookmark
+    const bookmarkIndex = model.state.bookmarks.findIndex(
+      bookmark => bookmark.id === recipeId
+    );
+    if (bookmarkIndex !== -1) {
+      recipeView._renderRecipe(model.state.bookmarks[bookmarkIndex]);
+      return;
+    }
+
+    //if not, render as normal
     await model.loadRecipe(recipeId);
     recipeView._renderRecipe(model.state.recipe);
   } catch (err) {
@@ -33,13 +45,13 @@ const controlRecipe = async () => {
 
 const controlSearchResults = async searchTerm => {
   try {
-    //get recipe list
+    //1) send search and get recipe list
     model.state.search.results = await model.loadRecipeList(searchTerm);
 
-    //render recipes in the view
+    //2) render recipes in the view
     recipeListView._renderRecipeList(model.getSearchResultsPage());
 
-    //render  button
+    //3) render buttons
     paginationView._render(model.state.search);
   } catch (err) {
     console.log(err);
@@ -57,12 +69,24 @@ const controlServings = updateServingsTo => {
   model.updateServings(updateServingsTo);
 
   //2) render recipe
+  recipeView._renderUpdated(model.state.recipe);
+};
+
+const constrolBookmark = () => {
+  //add or remove bookmark
+  model.toggleBookmark();
+
+  // render update recipe
   recipeView._renderRecipe(model.state.recipe);
+
+  //render bookmarks
+  bookmarkView._renderBookmarks(model.state.bookmarks);
 };
 
 const init = () => {
   recipeView._addHandlerRender(controlRecipe);
   recipeView._addHandlerServings(controlServings);
+  recipeView._addHandlerBookmar(constrolBookmark);
   searchView._addHandlerSearch(controlSearchResults);
   paginationView._addHandlerClick(controlPagination);
 };
